@@ -20,7 +20,7 @@ The project requires a couple tools to run, most of which are part of many devel
 - Docker
 - Go
 - Tilt
-- A local Kubernetes cluster
+- A local Kubernetes cluster (you can easily set it up using [ctlptl](https://github.com/tilt-dev/ctlptl))
 
 ### MacOS
 
@@ -32,12 +32,14 @@ The project requires a couple tools to run, most of which are part of many devel
 
 4. Install Tilt from [Tilt's official website](https://tilt.dev/)
 
-5. Install Go on MacOS using Homebrew:
+5. Install ctlptl from [Titl's official repo](https://github.com/tilt-dev/ctlptl)
+
+6. Install Go on MacOS using Homebrew:
 ```bash
 brew install go
 ```
 
-6. Make sure [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-macos/) is installed.
+7. Make sure [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-macos/) is installed.
 
 ### Windows (WSL)
 
@@ -52,7 +54,9 @@ You can either install via WSL (recommended) or using powershell (not covered, b
 
 4. Install Tilt from [Tilt's official website](https://tilt.dev/)
 
-5. Install Go on Windows using WSL:
+5. Install ctlptl from [Titl's official repo](https://github.com/tilt-dev/ctlptl)
+
+6. Install Go on Windows using WSL:
 ```bash
 # 1. Get the Go binary
 wget https://dl.google.com/go/go1.23.0.linux-amd64.tar.gz
@@ -76,9 +80,17 @@ export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 go version
 ```
 
-6. Make sure [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-macos/) is installed.
+7. Make sure [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl-windows/) is installed.
 
 ## Run
+
+Before running Titl, run `titl doctor` and make sure `Cluster Local Registry` is not `none`. But if it is, use ctlptl to setup Minikube and a local registry so Tilt won't try to push images to docker.io registry which causes the authorization error:
+
+```bash
+ctlptl create cluster minikube --registry=ctlptl-registry
+```
+
+Boot the microservices up:
 
 ```bash
 tilt up
